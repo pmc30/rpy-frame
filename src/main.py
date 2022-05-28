@@ -25,6 +25,7 @@ def parse_cmd_args(settings: Settings):
 
 
 def main():
+    os.environ["SDL_VIDEO_CENTERED"] = "1"
     pygame.init()
     settings = Settings()
     parse_cmd_args(settings)

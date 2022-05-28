@@ -17,7 +17,10 @@ class Gui:
             self.mode = (1440, 900)
         pygame.display.set_caption('rpy slideshow')
         pygame.display.set_mode(self.mode, pygame.DOUBLEBUF | pygame.HWSURFACE)
-        pygame.display.toggle_fullscreen()
+        info = pygame.display.Info()
+        width, height = info.current_w, info.current_h
+        pygame.display.set_mode((width, height), pygame.NOFRAME)
+#        pygame.display.toggle_fullscreen()
         pygame.mouse.set_visible(False)
         self.screen = pygame.display.get_surface()
         self.display_loading_logo()
