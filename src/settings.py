@@ -10,7 +10,7 @@ class Settings:
         self.media_folder: str = "../samples"
 
         # duration in seconds
-        self.duration: int = 600
+        self.duration: int = 20
  
         # This setting is basically inverted setting how much to zoom-in wide images
         #
@@ -70,7 +70,7 @@ class Settings:
         self.physical_button_longpress_duration = 600
 
         # Prepared images buffer size - how many images are prepared in advance
-        self.prepared_images_buffer_size = 10
+        self.prepared_images_buffer_size = 4
 
         # Target line length for image comment
         # After target length comment will be broken into new line at the first space

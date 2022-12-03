@@ -29,8 +29,8 @@ class ImageLoader(threading.Thread):
 
     # initializes the image library by detecting metadata and sorting images
     def run(self):
-        self.current_sequence = self.image_library.get_sequence()
-
+        self.current_sequence = self.image_library.get_sequence(min_len=1, max_len=2)
+        print(self.stop_request.isSet())
         while not self.stop_request.isSet():
             try:
                 meta = self.next_image_meta()
@@ -40,14 +40,18 @@ class ImageLoader(threading.Thread):
                     self.presentable_images_queue.put(img)
                 except Exception as e:
                     print('error loading: ' + meta.full_path)
+                    print(":((")
                     print(e)
             except Exception as e:
+                print(":((")
                 print(e)
+        print('while loop exiting')
+        print(self.stop_request.isSet())
 
     def next_image_meta(self):
         self.current_index += 1
         if self.current_index >= len(self.current_sequence):
-            self.current_sequence = self.image_library.get_sequence()
+            self.current_sequence = self.image_library.get_sequence(min_len=1, max_len=2)
             self.current_index = 0
         return self.current_sequence[self.current_index]
 

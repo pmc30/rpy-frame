@@ -49,6 +49,7 @@ class ImageLibrary:
             image_meta.date = self.get_date_from_exif(exif_data)
         if image_meta.date is None:
             print('[WARNING] Cannot read date EXIF for: '+image_meta.full_path)
+            image_meta.date = datetime(2000, 3, 14)    # Default date
         image_meta.caption = self.get_xmp_title(img)
 
         return image_meta
