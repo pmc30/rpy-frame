@@ -8,30 +8,49 @@ from image_loading_pipeline.image_loader import ImageLoader
 from io_thread.io_main import IoMain
 from settings import Settings
 from slideshow_presenter import SlideshowPresenter
+from time_checking.window import Window
 import sys
+import json
 
 from thread_context import ThreadContext
 
 
 def parse_cmd_args(settings: Settings):
+    loaded_windows = []
+
     if len(sys.argv) > 1:
         if sys.argv[1] == 'dev':
             settings.dev_mode = True
             settings.duration = 20
             print("Running in dev mode.")
-        else:
+        elif os.path.isfile(sys.argv[1]):
+            with open(sys.argv[1], 'r') as myfile:
+                data = myfile.read()
+            time_windows = json.loads(data)
+            
+            for window_dict in time_windows['windows']:
+                win = Window(window_dict)
+                if win.is_valid:
+                    loaded_windows.append(win)
+
+        elif os.path.isdir(sys.argv[1]):
             settings.media_folder = sys.argv[1]
-    print(f"Using {settings.media_folder} as media directory.")
+        else:
+            print("Error: Invalid arg provided")
+
+    print(f"Using {settings.media_folder} as default media directory.")
+    return loaded_windows
 
 
 def main():
     os.environ["SDL_VIDEO_CENTERED"] = "1"
     pygame.init()
     settings = Settings()
-    parse_cmd_args(settings)
+    time_window_list = parse_cmd_args(settings)
     gui = Gui(settings)
     thread_context = ThreadContext(settings, gui)
     thread_context.button_quit_handlers.append(lambda: os._exit(0))
+    thread_context.windows = time_window_list
     _thread.start_new_thread(start_io_thread, (thread_context, pygame))
 
     # main thread

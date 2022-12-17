@@ -15,6 +15,7 @@ class ImageLibrary:
         self.settings = thread_context.settings
         self.image_metas: List[ImageMeta] = None
         self.count: int = 0
+        self.windows = thread_context.windows
 
     def discover_images(self, directory: str) -> List[str]:
         images = FileLoader.get_files_from_directory(directory)
@@ -34,6 +35,16 @@ class ImageLibrary:
     # sequence always provides images that are close together
     def get_sequence(self, min_len=4, max_len=8) -> List[ImageMeta]:
         sequence_len = random.randint(min_len, max_len)
+
+        if len(self.windows) > 0:
+            windows_in_display_range = [win for win in self.windows if win.in_display_window()]
+            if len(windows_in_display_range) > 0:
+                window_to_use = sorted(windows_in_display_range, key= lambda x : x.priority)[0]
+                if window_to_use.folder != self.settings.media_folder:
+                    self.settings.media_folder = window_to_use.folder
+                    self.initialize()
+                    print(f'Loading {window_to_use.name} window')
+
         print(f'Starting a new sequence with length of {sequence_len:d}')
         first_index = random.randint(0, self.count - sequence_len)
         sequence = [self.image_metas[i] for i in range(first_index, first_index + sequence_len)]

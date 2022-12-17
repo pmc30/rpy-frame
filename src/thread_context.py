@@ -12,3 +12,6 @@ class ThreadContext:
         self.button_short_press_handlers = []
         self.button_long_press_handlers = []
         self.button_quit_handlers = []
+
+        # time checking
+        self.windows = []
