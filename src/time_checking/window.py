@@ -1,10 +1,10 @@
 import os
-from day import Day
-from hour import Hour
-from minute import Minute
-from month import Month
-from week_day import Weekday
-from year import Year
+from time_checking.day import Day
+from time_checking.hour import Hour
+from time_checking.minute import Minute
+from time_checking.month import Month
+from time_checking.week_day import Weekday
+from time_checking.year import Year
 
 
 class Window:

@@ -1,5 +1,5 @@
 import datetime
-from time_type import Time_type
+from time_checking.time_type import Time_type
 import calendar
 
 class Month(Time_type):
