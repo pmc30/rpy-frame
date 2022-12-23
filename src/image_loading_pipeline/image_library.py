@@ -43,7 +43,7 @@ class ImageLibrary:
                 if window_to_use.folder != self.settings.media_folder:
                     self.settings.media_folder = window_to_use.folder
                     self.initialize()
-                    print(f'Loading {window_to_use.name} window')
+                    print(f'Loaded {window_to_use.name} window')
 
         print(f'Starting a new sequence with length of {sequence_len:d}')
         first_index = random.randint(0, self.count - sequence_len)
