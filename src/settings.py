@@ -10,7 +10,7 @@ class Settings:
         self.media_folder: str = "/home/pi/Pictures/main"
 
         # duration in seconds
-        self.duration: int = 36
+        self.duration: int = 3600
  
         # This setting is basically inverted setting how much to zoom-in wide images
         #
