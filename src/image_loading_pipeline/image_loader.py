@@ -29,7 +29,7 @@ class ImageLoader(threading.Thread):
 
     # initializes the image library by detecting metadata and sorting images
     def run(self):
-        self.current_sequence = self.image_library.get_sequence(min_len=1, max_len=2)
+        self.current_sequence = self.image_library.get_sequence(min_len=1, max_len=1)
         
         while not self.stop_request.isSet():
             try:
